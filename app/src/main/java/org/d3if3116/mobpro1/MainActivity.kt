@@ -1,14 +1,22 @@
 package org.d3if3116.mobpro1
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.d3if3116.mobpro1.ui.theme.Mobpro1Theme
 
@@ -22,25 +30,62 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Ariq Athallah", "6706223116", "D3IF-46-03")
+                    Greeting("Ariq Athallah")
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Greeting(name: String, nim: String, kelas: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Halo nama saya $name\n dengan nim $nim\n kelas $kelas",
-        modifier = modifier
-    )
+fun MainScreen(content: @Composable (Modifier) -> Unit) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title =  {
+                    Text(text = stringResource(id = R.string.app_name))
+                },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                )
+            )
+        }
+    ) { padding ->
+        content(Modifier.padding(padding))
+    }
+}
+//fun Greeting(name: String, nim: String, kelas: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Halo nama saya $name\n dengan nim $nim\n kelas $kelas",
+//        modifier = modifier
+//    )
+//}
+
+
+@Composable
+fun Greeting(name: String) {
+    MainScreen {
+        Text(
+            text = "Hello $name!",
+            modifier = it
+        )
+    }
 }
 
 @Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun ScreenPreview() {
     Mobpro1Theme {
-        Greeting("Ariq Athallah","6706223116", "D3IF-46-03" )
+        Greeting("Ariq Athallah!")
     }
 }
+
+
+//fun GreetingPreview() {
+//    Mobpro1Theme {
+//        Greeting("Ariq Athallah","6706223116", "D3IF-46-03" )
+//    }
+//}
